@@ -79,7 +79,7 @@ type ListJobsResponse struct {
 	Jobs map[string]*job.Job `json:"jobs"`
 }
 
-// HandleListJobs responds with an array of all Jobs within the server,
+// HandleListJobsRequest: responds with an array of all Jobs within the server,
 // active or disabled.
 func HandleListJobsRequest(cache job.JobCache) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {

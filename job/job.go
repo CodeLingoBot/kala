@@ -413,7 +413,7 @@ func (j *Job) DeleteFromDependentJobs(cache JobCache) error {
 	return nil
 }
 
-// Runs the on failure job, if it exists. Does not lock the parent job - it is up to you to do this
+// RunOnFailureJob: Runs the on failure job, if it exists. Does not lock the parent job - it is up to you to do this
 // however you want
 func (j *Job) RunOnFailureJob(cache JobCache) {
 	if j.OnFailureJob != "" {
@@ -506,7 +506,7 @@ func (j *Job) validation() error {
 //Type alias for the recursive call
 type RJob Job
 
-// need this to fix race condition
+// MarshalJSON: need this to fix race condition
 func (j *Job) MarshalJSON() ([]byte, error) {
 	j.lock.RLock()
 	defer j.lock.RUnlock()

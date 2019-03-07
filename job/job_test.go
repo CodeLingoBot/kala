@@ -344,7 +344,7 @@ func TestDependentJobsSimple(t *testing.T) {
 	assert.WithinDuration(t, mcj.Metadata.LastSuccess, n, 4*time.Second)
 }
 
-// Parent doesn't exist
+// TestDependentJobsParentDoesNotExist: Parent doesn't exist
 func TestDependentJobsParentDoesNotExist(t *testing.T) {
 	cache := NewMockCache()
 
@@ -357,7 +357,7 @@ func TestDependentJobsParentDoesNotExist(t *testing.T) {
 	assert.Equal(t, err, ErrJobDoesntExist)
 }
 
-// Parent with two childs
+// TestDependentJobsTwoChilds: Parent with two childs
 func TestDependentJobsTwoChilds(t *testing.T) {
 	cache := NewMockCache()
 
@@ -406,7 +406,7 @@ func TestDependentJobsTwoChilds(t *testing.T) {
 	assert.True(t, mockChildJobOne.Metadata.LastAttemptedRun.UnixNano() < mockChildJobTwo.Metadata.LastAttemptedRun.UnixNano())
 }
 
-// Parent with child with two childs.
+// TestDependentJobsChildWithTwoChilds: Parent with child with two childs.
 func TestDependentJobsChildWithTwoChilds(t *testing.T) {
 	cache := NewMockCache()
 
@@ -475,7 +475,7 @@ func TestDependentJobsChildWithTwoChilds(t *testing.T) {
 	assert.True(t, mockChildJobOne.Metadata.LastAttemptedRun.UnixNano() < mockChildJobTwo.Metadata.LastAttemptedRun.UnixNano())
 }
 
-// Parent with a chain of length 5
+// TestDependentJobsFiveChain: Parent with a chain of length 5
 func TestDependentJobsFiveChain(t *testing.T) {
 	cache := NewMockCache()
 
@@ -574,7 +574,7 @@ func TestDependentJobsFiveChain(t *testing.T) {
 	assert.True(t, mockChildJobFour.Metadata.LastAttemptedRun.UnixNano() < mockChildJobFive.Metadata.LastAttemptedRun.UnixNano())
 }
 
-// Link in the chain fails
+// TestDependentJobsChainWithFailingJob: Link in the chain fails
 func TestDependentJobsChainWithFailingJob(t *testing.T) {
 	cache := NewMockCache()
 
@@ -743,7 +743,7 @@ func TestDependentJobsFiveChainWithSlowJob(t *testing.T) {
 	assert.True(t, mockChildJobFour.Metadata.LastAttemptedRun.UnixNano() < mockChildJobFive.Metadata.LastAttemptedRun.UnixNano())
 }
 
-// Two Parents with the same child
+// TestDependentJobsTwoParentsSameChild: Two Parents with the same child
 func TestDependentJobsTwoParentsSameChild(t *testing.T) {
 	cache := NewMockCache()
 
@@ -805,7 +805,7 @@ func TestDependentJobsTwoParentsSameChild(t *testing.T) {
 	assert.WithinDuration(t, mockChildJob.Metadata.LastSuccess, n, 3*time.Second)
 }
 
-// Child gets deleted -- Make sure it is removed from its parent jobs.
+// TestDependentJobsChildGetsDeleted: Child gets deleted -- Make sure it is removed from its parent jobs.
 func TestDependentJobsChildGetsDeleted(t *testing.T) {
 	cache := NewMockCache()
 
@@ -836,7 +836,7 @@ func TestDependentJobsChildGetsDeleted(t *testing.T) {
 	mockJob.lock.RUnlock()
 }
 
-// Child gets disabled
+// TestDependentJobsChildGetsDisabled: Child gets disabled
 func TestDependentJobsChildGetsDisabled(t *testing.T) {
 	cache := NewMockCache()
 
@@ -876,7 +876,7 @@ func TestDependentJobsChildGetsDisabled(t *testing.T) {
 	assert.WithinDuration(t, mockChildJob.Metadata.LastAttemptedRun, n, time.Duration(time.Second))
 }
 
-// Parent gets deleted -- If a parent job is deleted, unless its child jobs have another parent, they will be deleted as well.
+// TestDependentJobsParentJobGetsDeleted: Parent gets deleted -- If a parent job is deleted, unless its child jobs have another parent, they will be deleted as well.
 func TestDependentJobsParentJobGetsDeleted(t *testing.T) {
 	cache := NewMockCache()
 
